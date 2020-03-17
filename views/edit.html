@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{margin:0;padding: 0;}
+	</style>
+</head>
+
+<body>
+	{{user._id}}
+	<form id="formlist">
+		<input type="text" name="_id" value="{{user._id}}" hidden>
+		<label for="nickname">
+			<p>姓名：</p>
+			<input type="text" id="nickname" name="nickname" value="{{user.nickname}}">
+		</label>
+		<label for="gender">
+			<p>性别：</p>
+			<input type="radio" id="gender" name="gender" value="1" >男
+			<input type="radio" id="gender" name="gender" value="2" >女
+			<input type="radio" id="gender" name="gender" value="0" >保密
+		</label>
+		<label for="avatar">
+			<p>avatar：</p>
+			<input type="text" id="avatar" name="avatar">
+		</label>
+		<label for="birthdy">
+			<p>birthdy：</p>
+			<input type="text" id="birthdy" name="birthdy">
+		</label>
+		<label for="last_modified_time">
+			<input type="text" id="last_modified_time" name="last_modified_time" value="{{user.last_modified_time}}" hidden>
+		</label>
+		<button style="submit">提交</button>
+	</form>
+	<script src="/node_modules/jquery/dist/jquery.js"></script>
+	<script>
+		$('#formlist').on('submit', function(e){
+			e.preventDefault();
+			var formData = $(this).serialize()
+			$.ajax({
+				url: '/edit',
+				type: 'post',
+				dataType: 'json',
+				data: formData,
+				success: function(data){
+					console.log(data)
+					var err_code = data.err_code
+					if (err_code === 1) {//失败
+						alert(data.message)
+					}else if(err_code === 0) {//成功
+						alert(data.message)
+						window.location.href = '/'
+					}else{
+						alert(data.message)
+					}
+				}
+			})
+		})
+	</script>
+</body>
+</html>

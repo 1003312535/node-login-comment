@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{margin: 0;padding:0;}
+		/*#form{width: }*/
+		#wrap{width: 500px; margin: 50px auto;padding: 10px; border:1px solid black; border-radius:5px;}
+		#wrap .black{text-align: right; font-size: 18px;font-weight: 700}
+		#wrap .loginmessage{margin: 10px; font-size: 20px;}
+		#wrap form {width: 400px; margin: auto;}
+		#wrap form > label > p > input{width: 370px; height: 40px; font-size: 15px; border-radius: 5px;}
+		#wrap form > label > p {margin:5px 0px;}
+		#wrap form .remmend {margin-top: 10px; padding: 0px 5px;}
+		#wrap form .remmend label input {width: 16px; height: 16px;vertical-align: middle;}
+		#wrap form .remmend label span {display:inline-block; margin-left: 10px;}
+		#wrap form .remmend .pass{float: right;margin-right: 25px;}
+		#wrap form .login-or-register button{width: 100px; height: 40px; text-align: center; line-height: 40px; border-radius: 5px;margin-right: 20px; margin-top: 20px;font-size: 17px; font-weight: 800px; border:none;}
+	</style>
+</head>
+<body>
+	<div id="wrap">
+		<h1 class="black"><a href="">返回首页>></a></h1>
+		<div class="loginmessage"><h1>任宁博客登录<span>|</span>login</h1></div>
+		<form action="" id="userlogin">
+			<label for="email">
+				邮箱
+				<p><input type="email" id="emai" placeholder="email" name="email"></p>
+			</label>
+			<label for="password">
+				密码
+				<p><input type="password" id="password" placeholder="password" name="password"></p>
+			</label>
+			<div class="remmend">
+				<label for="remmend">
+					<input type="checkbox" name="remmend" id="remmend"><span>记住我</span>
+				</label>
+				<div class="pass"><a href="javaScript:;">忘记密码</a></div>
+			</div>
+			<div class="login-or-register">
+				<button type="submit">登录</button>
+				<button>注册</button>
+			</div>
+			
+		</form>
+	</div>
+	
+	<script src="/node_modules/jquery/dist/jquery.js"></script>
+	<script>
+		$('#userlogin').on('submit', function(e){
+			e.preventDefault();
+			var formData = $(this).serialize()
+			$.ajax({
+				url: '/login',
+				type: 'post',
+				dataType: 'json',
+				data: formData,
+				success: function(data){
+					console.log(data)
+					var err_code = data.err_code
+					if (err_code === 1) {
+						alert(data.message)
+					}else if(err_code === 0) {
+						alert(data.message)
+						window.location.href = '/'
+					}else{
+						alert(data.message)
+					}
+				}
+			})
+			
+		})
+	</script>
+</body>
+</html>

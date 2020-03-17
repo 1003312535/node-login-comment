@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    
+  </style>
+</head>
+<body>
+<form id="formSignin">
+  <label for="email">
+    <p>email: <input type="text" name="email" id="email" ></p>
+  </label>
+  <label for="nickname">
+    <p>nickname: <input type="text" name="nickname" id="nickname" ></p>
+  </label>
+  <label for="password">
+    <p>password: <input type="text" name="password" id="password" ></p>
+  </label>
+  <input type="submit" value="注册账户">
+</form>
+<script src="/node_modules/jquery/dist/jquery.js"></script>
+<script>
+  $('#formSignin').on("submit", function (e) {
+  
+    e.preventDefault()
+    var formData = $(this).serialize()
+    $.ajax({
+        url:'/register',
+        type:'post',
+        data:formData,
+        dataType:'json',
+        success:function(data){
+            if(data.err_code === 0){
+                //window.alert('注册成功！')
+                //服务端异步请求重定向无效
+                window.location.href = '/';
+            }else if(data.err_code === 1){
+                window.alert('邮箱或昵称已存在！')
+            }else if(data.err_code === 500){
+                window.alert('服务器正忙！')
+            }
+            console.log(data)
+        }
+    })
+})
+</script>
+</body>
+</html>

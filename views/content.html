@@ -1,0 +1,47 @@
+{{extend '../layouts/layer.html'}}
+{{block 'content'}}
+		<div id="bodyer">
+			<div class="content">
+				<div class="content-left">
+					{{data}}
+					<h1>{{data[0].title}}</h1>
+					<h2>data[0].nickname</h2>
+					<section>
+						{{data[0].comment}}
+					</section>
+					<div>
+						{{data[0].created_time}}
+					</div>
+					<div>
+						{{data[0].like}}
+					</div>
+					<div>
+						{{data[0].dislike}}
+					</div>
+				</div>
+				<div class="content-right">
+					<a href="/write">发表博客</a>
+				</div>
+			</div>
+		</div>
+{{/block}}
+{{block 'head'}}
+<style>
+	body{height: 100vh;}
+	#bodyer{width: 100%; height: calc(100%-200px-50px); position: absolute;left: 0px; top: 50px; background: red;}
+	#bodyer .content{width: 1300px; background: blue; margin: 0 auto; height: 100%}
+	#bodyer .content .content-left{width: 70%;height: 600px; background: pink; float: left;}
+	#bodyer .content .content-left ul li {
+		width: 100%;
+		background: aqua;
+		border-bottom: 1px solid black;
+		margin-bottom: 10px;
+		overflow: hidden;
+	}
+	#bodyer .content .content-left ul li h1 {font-size: 20px;}
+	#bodyer .content .content-left ul li div{width: 100%; overflow: hidden;}
+	#bodyer .content .content-left ul li .time{float: right;}
+	#bodyer .content .content-right{width: 25%;height: 600px; background: green; float: right;}
+
+</style>
+{{/block}}

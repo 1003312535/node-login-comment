@@ -1,0 +1,57 @@
+{{ extend '../layouts/layer.html' }}
+{{block 'content'}}
+		{{data}}
+	<div id="content">
+		<div class="center">
+			<form id="write">
+				<input type="text" name="nickname" value="{{user.nickname}}" hidden>
+				<h1>
+					<label for="title">
+						博客标题：<input type="text" placeholder="博客标题" id="title" name="title">
+					</label>
+				</h1>
+				<p><textarea name="comment" id="comment" cols="30" rows="10"></textarea></p>
+				<button type="submit">发布</button>
+			</form>
+		</div>
+	</div>
+
+{{/block}}
+{{block 'head'}}
+	<style>
+		*{margin:0; padding: 0;}
+		body{height: 100vh}
+		#content{width: 100%;height: clac(100%-40px);background: red;}
+		#content .center{width: 1300px; margin: auto;}
+		#content .center h1{text-align: center}
+		#content .center h1 input{width: 200px;height: 40px;line-height: 50px;vertical-align: middle;background: none;border:none;}
+		#content .center button{width: 100px; height: 50px;font-size: 20px;border:none;border-radius: 10px;margin-left:400px;}
+		textarea{width: 100%;height: 60%}
+	</style>
+{{/block}}
+{{block 'script'}}
+<script src="/node_modules/jquery/dist/jquery.js"></script>
+<script>
+	$('#write').on('submit',function (e) {
+			e.preventDefault();
+			var formData = $(this).serialize()
+		$.ajax({
+			url: '/write',
+			type: 'post',
+			data: formData,
+			dataType: 'json',
+			success: function (data) {
+				var err_code = data.err_code
+				if (err_code === 1) {
+					alert(data.message)
+				}else if(err_code === 0) {
+					alert(data.message)
+					window.location.href = '/'
+				}else{
+					alert(data.message)
+				}
+			}
+		})
+	})
+</script>
+{{/block}}
